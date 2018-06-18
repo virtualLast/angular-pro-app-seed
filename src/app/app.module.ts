@@ -30,3 +30,15 @@ export const ROUTES: Routes = [];
   ]
 })
 export class AppModule {}
+
+
+/*// Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBEwolN8mkbRldP-H1-1GAnSfmz-lvdIDA",
+    authDomain: "uaproject-72b6c.firebaseapp.com",
+    databaseURL: "https://uaproject-72b6c.firebaseio.com",
+    projectId: "uaproject-72b6c",
+    storageBucket: "uaproject-72b6c.appspot.com",
+    messagingSenderId: "563143693320"
+  };
+  */

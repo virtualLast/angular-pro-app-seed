@@ -6,10 +6,13 @@ import { Store } from 'store';
 
 // feature modules
 import { AuthModule } from '../auth/auth.module';
+import { HealthModule } from '../health/health.module';
 // containers
 import { AppComponent } from './containers/app/app.component';
 
 // components
+import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { AppNavComponent } from './components/app-nav/app-nav.component';
 
 // routes
 export const ROUTES: Routes = [];
@@ -18,10 +21,13 @@ export const ROUTES: Routes = [];
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
-    AuthModule
+    AuthModule,
+    HealthModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    AppHeaderComponent,
+    AppNavComponent
   ],
   providers: [
     Store
@@ -31,15 +37,3 @@ export const ROUTES: Routes = [];
   ]
 })
 export class AppModule {}
-
-
-/*// Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBEwolN8mkbRldP-H1-1GAnSfmz-lvdIDA",
-    authDomain: "uaproject-72b6c.firebaseapp.com",
-    databaseURL: "https://uaproject-72b6c.firebaseio.com",
-    projectId: "uaproject-72b6c",
-    storageBucket: "uaproject-72b6c.appspot.com",
-    messagingSenderId: "563143693320"
-  };
-  */

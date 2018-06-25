@@ -4,5 +4,9 @@
 
     <a routerLink="/auth/register">Not registered?</a>
     <button type="submit">Login</button>
+
+    <div class="error" *ngIf="error">
+      {{error}}
+    </div>
   </auth-form>
 </div>

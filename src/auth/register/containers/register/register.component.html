@@ -2,7 +2,7 @@
   <auth-form (submitted)="registerUser($event)">
       <h1>Register</h1>
 
-      <a routerLink="/auth/login">All ready registered?</a>
+      <a [routerLink]="['/auth/login']">All ready registered?</a>
       <button type="submit">Create account</button>
 
       <div class="error" *ngIf="error">

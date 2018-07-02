@@ -19,6 +19,9 @@ export const ROUTES: Routes = [
   },
   {
     path: 'new', component: MealComponent
+  },
+  {
+    path: ':id', component: MealComponent
   }
 ];
 

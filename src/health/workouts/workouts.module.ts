@@ -5,10 +5,24 @@ import { RouterModule, Routes } from '@angular/router';
 
 // containers
 import { WorkoutsComponent } from './containers/workouts/workouts.component';
+import { WorkoutComponent } from './containers/workout/workout.component';
+
+// components
+import { WorkoutFormComponent } from './components/workout-form/workout-form.component';
+import { WorkoutTypeComponent } from './components/workout-type/workout-type.component';
+
+// shared
+import { SharedModule } from '../shared/shared.module';
 
 export const ROUTES: Routes = [
   {
     path: '', component: WorkoutsComponent
+  },
+  {
+    path: 'new', component: WorkoutComponent
+  },
+  {
+    path: ':id', component: WorkoutComponent
   }
 ];
 
@@ -16,10 +30,14 @@ export const ROUTES: Routes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild(ROUTES)
+    RouterModule.forChild(ROUTES),
+    SharedModule
   ],
-  exports: [],
-  declarations: [WorkoutsComponent],
-  providers: [],
+  declarations: [
+    WorkoutsComponent,
+    WorkoutComponent,
+    WorkoutFormComponent,
+    WorkoutTypeComponent
+  ]
 })
 export class WorkoutsModule { }

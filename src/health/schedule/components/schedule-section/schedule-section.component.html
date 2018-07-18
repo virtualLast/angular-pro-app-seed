@@ -1,7 +1,9 @@
 <div class="schedule-section">
+
   <div class="schedule-section__bar">
     {{ name }}
   </div>
+
   <div>
     <div class="schedule-section__item food" *ngIf="section.meals; else addMeal" (click)="onSelect('meals', section.meals)">
       <span>{{ section.meals | join }}</span>
@@ -20,4 +22,5 @@
       </div>
     </ng-template>
   </div>
+
 </div>

@@ -14,28 +14,7 @@ import {
 @Component({
   selector: 'schedule-calendar',
   styleUrls: ['schedule-calendar.component.scss'],
-  template: `
-    <div class="calendar">
-      
-      <schedule-controls
-        [selected]="selectedDay"
-        (move)="onChange($event)">
-      </schedule-controls>
-
-      <schedule-days
-        [selected]="selectedDayIndex"
-        (select)="selectDay($event)">
-      </schedule-days>
-
-      <schedule-section
-        *ngFor="let section of sections"
-        [name]="section.name"
-        [section]="getSection(section.key)"
-        (select)="selectSection($event, section.key)">
-      </schedule-section>
-
-    </div>
-  `
+  templateUrl: 'schedule-calendar.component.html'
 })
 export class ScheduleCalendarComponent implements OnChanges {
   selectedDayIndex: number;

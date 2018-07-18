@@ -21,26 +21,7 @@ import {
 @Component({
   selector: 'schedule',
   styleUrls: ['schedule.component.scss'],
-  template: `
-    <div class="schedule">
-      
-      <schedule-calendar
-        [date]="date$ | async"
-        [items]="schedule$ | async"
-        (change)="changeDate($event)"
-        (select)="changeSection($event)">
-      </schedule-calendar>
-
-      <schedule-assign
-        *ngIf="open"
-        [section]="selected$ | async"
-        [list]="list$ | async"
-        (update)="assignItem($event)"
-        (cancel)="closeAssign()">
-      </schedule-assign>
-
-    </div>
-  `
+  templateUrl: 'schedule.component.html'
 })
 export class ScheduleComponent implements OnInit, OnDestroy {
   open = false;

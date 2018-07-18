@@ -1,17 +1,21 @@
-import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import "rxjs/add/operator/pluck";
-import "rxjs/add/operator/distinctUntilChanged";
+import 'rxjs/add/operator/pluck';
+import 'rxjs/add/operator/distinctUntilChanged';
 
-import { User } from "./auth/shared/services/auth/auth.service";
-import { Meal } from "./health/shared/services/meals/meals.service";
-import { Workout } from "./health/shared/services/workouts/workouts.service";
+import { User } from './auth/shared/services/auth/auth.service';
+import { ScheduleItem } from './health/shared/services/schedule/schedule.service';
+import { Meal } from './health/shared/services/meals/meals.service';
+import { Workout } from './health/shared/services/workouts/workouts.service';
 
 export interface State {
   user: User;
   meals: Meal[];
+  selected: any;
+  list: any;
   date: Date;
+  schedule: ScheduleItem[];
   workouts: Workout[];
   [key: string]: any;
 }
@@ -19,7 +23,10 @@ export interface State {
 const state: State = {
   user: undefined,
   meals: undefined,
+  selected: undefined,
+  list: undefined,
   date: undefined,
+  schedule: undefined,
   workouts: undefined
 };
 

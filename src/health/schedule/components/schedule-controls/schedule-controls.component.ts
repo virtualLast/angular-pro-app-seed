@@ -4,17 +4,19 @@ import {
   Output,
   EventEmitter,
   ChangeDetectionStrategy
-} from "@angular/core";
+} from '@angular/core';
 
 @Component({
-  selector: "schedule-controls",
+  selector: 'schedule-controls',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: "schedule-controls.component.html",
-  styleUrls: ["schedule-controls.component.scss"]
+  templateUrl: 'schedule-controls.component.html',
+  styleUrls: ['schedule-controls.component.scss']
 })
 export class ScheduleControlsComponent {
   offset = 0;
+
   @Input() selected: Date;
+
   @Output() move = new EventEmitter<number>();
 
   moveDate(offset: number) {

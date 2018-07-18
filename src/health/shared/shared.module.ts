@@ -1,26 +1,26 @@
-import { NgModule, ModuleWithProviders } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
-// third party modules
-import { AngularFireDatabaseModule } from "angularfire2/database";
+// third-party modules
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 // components
-import { ListItemComponent } from "./components/list-item/list-item.component";
-
-// pipes
-import { JoinPipe } from "./pipes/join.pipe";
-import { WorkoutPipe } from "./pipes/workout.pipe";
+import { ListItemComponent } from './components/list-item/list-item.component';
 
 // services
-import { MealsService } from "./services/meals/meals.service";
-import { WorkoutsService } from "./services/workouts/workouts.service";
-import { ScheduleService } from "./services/schedule/schedule.service";
+import { MealsService } from './services/meals/meals.service';
+import { WorkoutsService } from './services/workouts/workouts.service';
+import { ScheduleService } from './services/schedule/schedule.service';
+
+// pipes
+import { JoinPipe } from './pipes/join.pipe';
+import { WorkoutPipe } from './pipes/workout.pipe';
 
 @NgModule({
   imports: [CommonModule, RouterModule, AngularFireDatabaseModule],
-  exports: [ListItemComponent, JoinPipe, WorkoutPipe],
-  declarations: [ListItemComponent, JoinPipe, WorkoutPipe]
+  declarations: [ListItemComponent, JoinPipe, WorkoutPipe],
+  exports: [ListItemComponent, JoinPipe, WorkoutPipe]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

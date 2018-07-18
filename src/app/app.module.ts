@@ -16,7 +16,7 @@ import { AppNavComponent } from './components/app-nav/app-nav.component';
 
 // routes
 export const ROUTES: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'schedule'}
+  { path: '', pathMatch: 'full', redirectTo: 'schedule' }
 ];
 
 @NgModule({
@@ -26,16 +26,8 @@ export const ROUTES: Routes = [
     AuthModule,
     HealthModule
   ],
-  declarations: [
-    AppComponent,
-    AppHeaderComponent,
-    AppNavComponent
-  ],
-  providers: [
-    Store
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+  declarations: [AppComponent, AppHeaderComponent, AppNavComponent],
+  providers: [Store],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

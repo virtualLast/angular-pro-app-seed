@@ -1,29 +1,67 @@
 import {
   Component,
-  OnInit,
   Input,
-  ChangeDetectionStrategy,
   Output,
-  EventEmitter
-} from "@angular/core";
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 @Component({
-  selector: "list-item",
+  selector: 'list-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: "list-item.component.html",
-  styleUrls: ["list-item.component.scss"]
+  styleUrls: ['list-item.component.scss'],
+  template: `
+    <div class="list-item">
+      <a [routerLink]="getRoute(item)">
+
+        <p class="list-item__name">{{ item.name }}</p>
+        <p class="list-item__ingredients">
+          <span *ngIf="item.ingredients; else showWorkout">
+            {{ item.ingredients | join }}
+          </span>
+        </p>
+        <ng-template #showWorkout>
+          <span>{{ item | workout }}</span>
+        </ng-template>
+
+      </a>
+
+      <div 
+        class="list-item__delete"
+        *ngIf="toggled">
+        <p>Delete item?</p>
+        <button 
+          class="confirm"
+          type="button"
+          (click)="removeItem()">
+          Yes
+        </button>
+        <button 
+          class="cancel"
+          type="button"
+          (click)="toggle()">
+          No
+        </button>
+      </div>
+
+      <button 
+        class="trash"
+        type="button"
+        (click)="toggle()">
+        <img src="/img/remove.svg">
+      </button>
+
+    </div>
+  `
 })
-export class ListItemComponent implements OnInit {
+export class ListItemComponent {
   toggled = false;
 
   @Input() item: any;
+
   @Output() remove = new EventEmitter<any>();
 
   constructor() {}
-
-  getRoute(item: any) {
-    return [`../${item.ingredients ? "meals" : "workouts"}`, item.$key];
-  }
 
   toggle() {
     this.toggled = !this.toggled;
@@ -33,5 +71,7 @@ export class ListItemComponent implements OnInit {
     this.remove.emit(this.item);
   }
 
-  ngOnInit() {}
+  getRoute(item: any) {
+    return [`../${item.ingredients ? 'meals' : 'workouts'}`, item.$key];
+  }
 }

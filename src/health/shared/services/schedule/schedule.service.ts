@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
+import { AngularFireDatabase } from 'angularfire2/database';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Store } from 'store';
+
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
+
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
-import { AngularFireDatabase } from 'angularfire2/database';
 
-import { Store } from 'store';
 import { AuthService } from '../../../../auth/shared/services/auth/auth.service';
-import { Meal } from '../../../shared/services/meals/meals.service';
-import { Workout } from '../../../shared/services/workouts/workouts.service';
+
+import { Meal } from '../meals/meals.service';
+import { Workout } from '../workouts/workouts.service';
 
 export interface ScheduleItem {
   meals: Meal[];
@@ -21,6 +24,7 @@ export interface ScheduleItem {
   timestamp: number;
   $key?: string;
 }
+
 export interface ScheduleList {
   morning?: ScheduleItem;
   lunch?: ScheduleItem;
@@ -32,14 +36,14 @@ export interface ScheduleList {
 @Injectable()
 export class ScheduleService {
   private date$ = new BehaviorSubject(new Date());
-
   private section$ = new Subject();
   private itemList$ = new Subject();
 
   items$ = this.itemList$
     .withLatestFrom(this.section$)
     .map(([items, section]: any[]) => {
-      const id = section.data.key$;
+      const id = section.data.$key;
+
       const defaults: ScheduleItem = {
         workouts: null,
         meals: null,
@@ -72,6 +76,7 @@ export class ScheduleService {
         day.getMonth(),
         day.getDate()
       ).getTime();
+
       const endAt =
         new Date(
           day.getFullYear(),
@@ -84,6 +89,7 @@ export class ScheduleService {
     .switchMap(({ startAt, endAt }: any) => this.getSchedule(startAt, endAt))
     .map((data: any) => {
       const mapped: ScheduleList = {};
+
       for (const prop of data) {
         if (!mapped[prop.section]) {
           mapped[prop.section] = prop;
@@ -100,23 +106,28 @@ export class ScheduleService {
     private db: AngularFireDatabase
   ) {}
 
-  updateDate(date: Date) {
-    this.date$.next(date);
-  }
-
-  selectSection(section: any) {
-    this.section$.next(section);
-  }
-
-  private updateSection(key: string, payload: ScheduleItem) {
-    return this.db.object(`schedule/${this.uid}/${key}`).update(payload);
-  }
-  private createSection(payload: ScheduleItem) {
-    return this.db.list(`schedule/${this.uid}`).push(payload);
+  get uid() {
+    return this.authService.user.uid;
   }
 
   updateItems(items: string[]) {
     this.itemList$.next(items);
+  }
+
+  updateDate(date: Date) {
+    this.date$.next(date);
+  }
+
+  selectSection(event: any) {
+    this.section$.next(event);
+  }
+
+  private createSection(payload: ScheduleItem) {
+    return this.db.list(`schedule/${this.uid}`).push(payload);
+  }
+
+  private updateSection(key: string, payload: ScheduleItem) {
+    return this.db.object(`schedule/${this.uid}/${key}`).update(payload);
   }
 
   private getSchedule(startAt: number, endAt: number) {
@@ -127,9 +138,5 @@ export class ScheduleService {
         endAt
       }
     });
-  }
-
-  get uid() {
-    return this.authService.user.uid;
   }
 }

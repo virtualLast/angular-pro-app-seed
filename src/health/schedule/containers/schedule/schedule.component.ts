@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
+import { Store } from 'store';
+
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -16,12 +18,29 @@ import {
   WorkoutsService
 } from '../../../shared/services/workouts/workouts.service';
 
-import { Store } from 'store';
-
 @Component({
   selector: 'schedule',
   styleUrls: ['schedule.component.scss'],
-  templateUrl: 'schedule.component.html'
+  template: `
+    <div class="schedule">
+      
+      <schedule-calendar
+        [date]="date$ | async"
+        [items]="schedule$ | async"
+        (change)="changeDate($event)"
+        (select)="changeSection($event)">
+      </schedule-calendar>
+
+      <schedule-assign
+        *ngIf="open"
+        [section]="selected$ | async"
+        [list]="list$ | async"
+        (update)="assignItem($event)"
+        (cancel)="closeAssign()">
+      </schedule-assign>
+
+    </div>
+  `
 })
 export class ScheduleComponent implements OnInit, OnDestroy {
   open = false;
@@ -48,15 +67,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     this.scheduleService.selectSection(event);
   }
 
-  assignItem(items: string[]) {
-    this.scheduleService.updateItems(items);
-    this.closeAssign();
-  }
-
-  closeAssign() {
-    this.open = false;
-  }
-
   ngOnInit() {
     this.date$ = this.store.select('date');
     this.schedule$ = this.store.select('schedule');
@@ -75,5 +85,14 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  assignItem(items: string[]) {
+    this.scheduleService.updateItems(items);
+    this.closeAssign();
+  }
+
+  closeAssign() {
+    this.open = false;
   }
 }

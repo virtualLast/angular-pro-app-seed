@@ -1,4 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 import { User } from '../../../auth/shared/services/auth/auth.service';
 
@@ -6,19 +12,25 @@ import { User } from '../../../auth/shared/services/auth/auth.service';
   selector: 'app-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['app-header.component.scss'],
-  templateUrl: 'app-header.component.html'
+  template: `
+    <div class="app-header">
+      <div class="wrapper">
+        <img src="/img/logo.svg">
+        <div 
+          class="app-header__user-info"
+          *ngIf="user?.authenticated">
+          <span (click)="logoutUser()"></span>
+        </div>
+      </div>
+    </div>
+  `
 })
-
-export class AppHeaderComponent implements OnInit {
-
+export class AppHeaderComponent {
   @Input() user: User;
+
   @Output() logout = new EventEmitter<any>();
 
-  constructor() { }
-
   logoutUser() {
-    this.logout.emit()
+    this.logout.emit();
   }
-
-  ngOnInit() { }
 }

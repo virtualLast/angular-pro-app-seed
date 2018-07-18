@@ -1,9 +1,9 @@
 import {
   Component,
+  OnChanges,
   Input,
   Output,
-  EventEmitter,
-  OnChanges
+  EventEmitter
 } from '@angular/core';
 
 import {
@@ -13,8 +13,29 @@ import {
 
 @Component({
   selector: 'schedule-calendar',
-  templateUrl: 'schedule-calendar.component.html',
-  styleUrls: ['schedule-calendar.component.scss']
+  styleUrls: ['schedule-calendar.component.scss'],
+  template: `
+    <div class="calendar">
+      
+      <schedule-controls
+        [selected]="selectedDay"
+        (move)="onChange($event)">
+      </schedule-controls>
+
+      <schedule-days
+        [selected]="selectedDayIndex"
+        (select)="selectDay($event)">
+      </schedule-days>
+
+      <schedule-section
+        *ngFor="let section of sections"
+        [name]="section.name"
+        [section]="getSection(section.key)"
+        (select)="selectSection($event, section.key)">
+      </schedule-section>
+
+    </div>
+  `
 })
 export class ScheduleCalendarComponent implements OnChanges {
   selectedDayIndex: number;
@@ -40,6 +61,11 @@ export class ScheduleCalendarComponent implements OnChanges {
   @Output() select = new EventEmitter<any>();
 
   constructor() {}
+
+  ngOnChanges() {
+    this.selectedDayIndex = this.getToday(this.selectedDay);
+    this.selectedWeek = this.getStartOfWeek(new Date(this.selectedDay));
+  }
 
   getSection(name: string): ScheduleItem {
     return (this.items && this.items[name]) || {};
@@ -85,10 +111,5 @@ export class ScheduleCalendarComponent implements OnChanges {
     const day = date.getDay();
     const diff = date.getDate() - day + (day === 0 ? -6 : 1);
     return new Date(date.setDate(diff));
-  }
-
-  ngOnChanges() {
-    this.selectedDayIndex = this.getToday(this.selectedDay);
-    this.selectedWeek = this.getStartOfWeek(new Date(this.selectedDay));
   }
 }

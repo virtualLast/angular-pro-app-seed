@@ -5,15 +5,30 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Store } from 'store';
-import { AuthService, User } from '../../../auth/shared/services/auth/auth.service';
+import {
+  AuthService,
+  User
+} from '../../../auth/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
   styleUrls: ['app.component.scss'],
-  templateUrl: 'app.component.html'
+  template: `
+    <div>
+      <app-header
+        [user]="user$ | async"
+        (logout)="onLogout()">
+      </app-header>
+      <app-nav
+        *ngIf="(user$ | async)?.authenticated">
+      </app-nav>
+      <div class="wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  `
 })
 export class AppComponent implements OnInit, OnDestroy {
-
   user$: Observable<User>;
   subscription: Subscription;
 
@@ -23,16 +38,17 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService
   ) {}
 
-  async onLogout() {
-    await this.authService.logoutUser();
-    this.router.navigate(['/auth/login']);
-  }
-
   ngOnInit() {
     this.subscription = this.authService.auth$.subscribe();
     this.user$ = this.store.select<User>('user');
   }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  async onLogout() {
+    await this.authService.logoutUser();
+    this.router.navigate(['/auth/login']);
   }
 }

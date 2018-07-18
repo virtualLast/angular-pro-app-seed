@@ -9,8 +9,24 @@ import {
 @Component({
   selector: 'schedule-controls',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'schedule-controls.component.html',
-  styleUrls: ['schedule-controls.component.scss']
+  styleUrls: ['schedule-controls.component.scss'],
+  template: `
+    <div class="controls">
+      
+      <button 
+        type="button"
+        (click)="moveDate(offset - 1)">
+        <img src="img/chevron-left.svg">
+      </button>
+      <p>{{ selected | date:'yMMMMd' }}</p>
+      <button 
+        type="button"
+        (click)="moveDate(offset + 1)">
+        <img src="img/chevron-right.svg">
+      </button>
+
+    </div>
+  `
 })
 export class ScheduleControlsComponent {
   offset = 0;

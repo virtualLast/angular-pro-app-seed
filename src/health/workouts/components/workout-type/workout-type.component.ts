@@ -1,10 +1,5 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  forwardRef
-} from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Component, forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const TYPE_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -13,14 +8,26 @@ export const TYPE_CONTROL_ACCESSOR = {
 };
 
 @Component({
-  selector: "workout-type",
+  selector: 'workout-type',
   providers: [TYPE_CONTROL_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: "workout-type.component.html",
-  styleUrls: ["workout-type.component.scss"]
+  styleUrls: ['workout-type.component.scss'],
+  template: `
+    <div class="workout-type">
+      <div
+        class="workout-type__pane"
+        *ngFor="let selector of selectors"
+        [class.active]="selector === value"
+        (click)="setSelected(selector)">
+        <img src="/img/{{ selector }}.svg">
+        <p>{{ selector }}</p>
+      </div>
+    </div>
+  `
 })
-export class WorkoutTypeComponent implements OnInit, ControlValueAccessor {
-  selectors = ["strength", "endurance"];
+export class WorkoutTypeComponent implements ControlValueAccessor {
+  selectors = ['strength', 'endurance'];
+
   value: string;
 
   private onTouch: Function;
@@ -43,6 +50,4 @@ export class WorkoutTypeComponent implements OnInit, ControlValueAccessor {
     this.onModelChange(value);
     this.onTouch();
   }
-
-  ngOnInit() {}
 }

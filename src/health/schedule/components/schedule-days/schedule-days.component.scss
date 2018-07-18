@@ -26,10 +26,18 @@
     height: 32px;
     font-size: 14px;
     font-weight: 600;
+<<<<<<< HEAD
     transition: all 0.2s ease-in-out;
+=======
+    transition: all .2s ease-in-out;
+>>>>>>> 25-hooking-into-firebase
     &.active {
       background: #39a1e7;
       color: #fff;
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 25-hooking-into-firebase

@@ -5,7 +5,11 @@
   bottom: 0;
   width: 100%;
   height: 100%;
+<<<<<<< HEAD
   background: rgba(0, 0, 0, 0.2);
+=======
+  background: rgba(0,0,0,.2);
+>>>>>>> 25-hooking-into-firebase
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,7 +70,11 @@
     div {
       cursor: pointer;
       padding: 8px 10px 8px 35px;
+<<<<<<< HEAD
       transition: all 0.2s ease-in-out;
+=======
+      transition: all .2s ease-in-out;
+>>>>>>> 25-hooking-into-firebase
       background: url(/img/check.svg) no-repeat 8px 9px;
       background-size: 20px 20px;
       border-bottom: 1px solid #d1deeb;
@@ -99,7 +107,11 @@
       background: darken(#39a1e7, 5%);
     }
     &:disabled {
+<<<<<<< HEAD
       opacity: 0.4;
+=======
+      opacity: .4;
+>>>>>>> 25-hooking-into-firebase
       cursor: not-allowed;
     }
     &--cancel {
@@ -117,4 +129,8 @@
       }
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 25-hooking-into-firebase
